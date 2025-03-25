@@ -6,7 +6,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/setupTests.js",
     exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
-    base: "./",
+    base: "/front_5th_chapter1-1/",
     build: {
       rollupOptions: {
         input: {
