@@ -1,20 +1,17 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 
-export default defineConfig({
-  base: "/front_5th_chapter1-1/",
-  build: {
-    outDir: "dist",
-    rollupOptions: {
-      input: {
-        main: "index.html",
-        hash: "index.hash.html",
-      },
+// eslint-disable-next-line no-unused-vars
+export default defineConfig(({ command, mode }) => {
+  return {
+    base: mode === "production" ? "/front_5th_chapter1-1/" : "/",
+    build: {
+      outDir: "dist",
     },
-  },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    setupFiles: "./src/setupTests.js",
-    exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
-  },
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: "./src/setupTests.js",
+      exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
+    },
+  };
 });
