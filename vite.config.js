@@ -9,7 +9,7 @@ export default defineConfig({
   },
   base: "/front_5th_chapter1-1/",
   build: {
-    outDir: "./dist",
+    outDir: "dist",
     rollupOptions: {
       input: {
         main: "./index.html",
