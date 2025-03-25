@@ -12,8 +12,8 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       input: {
-        main: "./index.html",
-        hash: "./index.hash.html",
+        main: "index.html",
+        hash: "index.hash.html",
       },
     },
   },
