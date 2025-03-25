@@ -7,7 +7,8 @@ export default defineConfig({
     setupFiles: "./src/setupTests.js",
     exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
   },
-  base: "./front_5th_chapter1-1/",
+  publicPath: "/front_5th_chapter1-1/",
+  // base: "./front_5th_chapter1-1/",
   build: {
     outDir: "./dist",
     rollupOptions: {
