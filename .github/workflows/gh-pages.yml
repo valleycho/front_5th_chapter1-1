@@ -1,38 +1,33 @@
-name: GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main # Set a branch name to trigger deployment
-  pull_request:
+      - main # main 브랜치에 push할 때 실행
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+    runs-on: ubuntu-latest
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          hugo-version: "0.110.0"
+          node-version: "18" # 또는 프로젝트에서 사용하는 Node.js 버전
+
+      - name: Install dependencies
+        run: npm install # 또는 yarn install
 
       - name: Build
-        run: hugo --minify
+        run: npm run build # 또는 yarn build
+        env:
+          BASE_URL: "/${{ github.event.repository.name }}" # GitHub Pages URL에 맞게 base 설정
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        # If you're changing the branch from main,
-        # also change the `main` in `refs/heads/main`
-        # below accordingly.
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.WEEK1_GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./dist # Vite의 기본 빌드 출력 디렉토리
