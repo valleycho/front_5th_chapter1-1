@@ -1,5 +1,6 @@
 {
   "name": "front-5th-chapter1-1",
+  "homepage": "https://valleycho.github.io/front_5th_chapter1-1",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,8 @@
     "dev": "vite",
     "dev:hash": "vite --open ./index.hash.html",
     "build": "vite build",
-    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "lint:fix": "eslint --fix",
     "prettier:write": "prettier --write ./src",
     "preview": "vite preview",
