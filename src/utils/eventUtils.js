@@ -1,5 +1,6 @@
 import { navigationTo } from "./routerUtils";
 import { render } from "../main";
+import { hashRender } from "../main.hash";
 
 // 링크 클릭시 페이지 이동
 document.addEventListener("click", async (e) => {
@@ -52,4 +53,9 @@ document.addEventListener("submit", (e) => {
 // 브라우저 뒤로가기시 이전 상태 복원
 window.addEventListener("popstate", () => {
   render();
+});
+
+// 해시라우터 변경시 렌더링
+window.addEventListener("hashchange", () => {
+  hashRender();
 });
