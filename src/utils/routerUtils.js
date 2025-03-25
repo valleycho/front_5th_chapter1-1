@@ -7,7 +7,14 @@ import { render } from "../main";
 const routes = {
   "/": () => MainPage(),
   "/login": () => LoginPage(),
-  "/profile": () => ProfilePage(),
+  "/profile": () => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      return LoginPage();
+    }
+
+    return ProfilePage();
+  },
   "*": () => ErrorPage(),
 };
 
