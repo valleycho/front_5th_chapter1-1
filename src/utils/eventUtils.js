@@ -6,8 +6,29 @@ document.addEventListener("click", async (e) => {
   if (e.target.tagName === "A") {
     e.preventDefault();
 
+    if (e.target.textContent === "로그아웃") {
+      await localStorage.removeItem("user");
+      navigationTo("/login");
+      return;
+    }
+
     const href = e.target.getAttribute("href");
     navigationTo(href);
+  }
+});
+
+// form 제출시 동작 이벤트
+document.addEventListener("submit", (e) => {
+  if (e.target.id === "login-form") {
+    // 로그인
+    e.preventDefault();
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ username: "testuser", email: "", bio: "" }),
+    );
+
+    navigationTo("/profile");
+    render();
   }
 });
 
