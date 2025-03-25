@@ -1,6 +1,9 @@
+import { getPathName } from "../utils/routerUtils";
+
 export const Header = () => {
   const user = localStorage.getItem("user");
   const isLoggedIn = user && user !== null;
+  const pathName = getPathName();
 
   return `
     <header class="bg-blue-600 text-white p-4 sticky top-0">
@@ -12,15 +15,16 @@ export const Header = () => {
           ${
             isLoggedIn
               ? `
-            <li><a href="/" class="text-blue-600">홈</a></li>
-            <li><a href="/profile" class="text-gray-600">프로필</a></li>
+            <li><a href="/" class="${pathName === "/" ? "text-blue-600 font-bold" : "text-gray-600"}">홈</a></li>
+            <li><a href="/profile" class="${pathName === "/profile" ? "text-blue-600 font-bold" : "text-gray-600"}">프로필</a></li>
             <li><a href="#" class="text-gray-600" id="logout">로그아웃</a></li>
           `
               : `
-            <li><a href="/" class="text-gray-600">홈</a></li>
-            <li><a href="/login" class="text-gray-600">로그인</a></li>
+            <li><a href="/" class="${pathName === "/" ? "text-blue-600 font-bold" : "text-gray-600"}">홈</a></li>
+            <li><a href="/login" class="${pathName === "/login" ? "text-blue-600 font-bold" : "text-gray-600"}">로그인</a></li>
           `
           }
+          
         </ul>
       </nav>
   `;

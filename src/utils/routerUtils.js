@@ -6,7 +6,15 @@ import { render } from "../main";
 
 const routes = {
   "/": () => MainPage(),
-  "/login": () => LoginPage(),
+  "/login": () => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      navigationTo("/");
+      return MainPage();
+    }
+
+    return LoginPage();
+  },
   "/profile": () => {
     const user = localStorage.getItem("user");
     if (!user) {
