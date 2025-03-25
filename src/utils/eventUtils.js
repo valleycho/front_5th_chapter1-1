@@ -30,6 +30,23 @@ document.addEventListener("submit", (e) => {
     navigationTo("/profile");
     render();
   }
+
+  if (e.target.id === "profile-form") {
+    const username = document.getElementById("username")?.value || "";
+    const email = document.getElementById("email")?.value || "";
+    const bio = document.getElementById("bio")?.value || "";
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        username: username,
+        email: email,
+        bio: bio,
+      }),
+    );
+
+    alert("프로필이 업데이트되었습니다.");
+  }
 });
 
 // 브라우저 뒤로가기시 이전 상태 복원
