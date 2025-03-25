@@ -8,6 +8,7 @@ export default defineConfig({
     exclude: ["**/e2e/**", "**/*.e2e.spec.js", "**/node_modules/**"],
     base: "/front_5th_chapter1-1/",
     build: {
+      outDir: "./dist",
       rollupOptions: {
         input: {
           main: "./index.html",
