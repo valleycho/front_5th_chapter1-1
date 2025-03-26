@@ -1,10 +1,10 @@
 // routerUtils.js
-import { LoginPage } from "../pages/LoginPage";
-import { MainPage } from "../pages/MainPage";
-import { ProfilePage } from "../pages/ProfilePage";
-import { ErrorPage } from "../pages/ErrorPage";
-import { render } from "../main";
-import { hashRender } from "../main.hash";
+import { LoginPage } from "../pages/LoginPage.js";
+import { MainPage } from "../pages/MainPage.js";
+import { ProfilePage } from "../pages/ProfilePage.js";
+import { ErrorPage } from "../pages/ErrorPage.js";
+import { render } from "../main.js";
+import { hashRender } from "../main.hash.js";
 
 const routes = {
   "/": () => MainPage(),

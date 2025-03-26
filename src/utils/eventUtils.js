@@ -1,6 +1,6 @@
-import { navigationTo } from "./routerUtils";
-import { render } from "../main";
-import { hashRender } from "../main.hash";
+import { navigationTo } from "./routerUtils.js";
+import { render } from "../main.js";
+import { hashRender } from "../main.hash.js";
 
 // 링크 클릭시 페이지 이동
 document.addEventListener("click", async (e) => {
