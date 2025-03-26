@@ -6,15 +6,16 @@ import { ErrorPage } from "../pages/ErrorPage.js";
 import { render } from "../main.js";
 import { hashRender } from "../main.hash.js";
 
-const appPath =
-  import.meta.env.MODE === "production" ? "/front_5th_chapter1-1/" : "/";
+const appPath = window.location.hostname.includes("github.io")
+  ? "/front_5th_chapter1-1/"
+  : "/";
 
 const routes = {
   [`${appPath}`]: () => MainPage(),
   [`${appPath}login`]: () => {
     const user = localStorage.getItem("user");
     if (user) {
-      navigationTo(`${appPath}`);
+      navigationTo("/");
       return MainPage();
     }
 
@@ -23,7 +24,7 @@ const routes = {
   [`${appPath}profile`]: () => {
     const user = localStorage.getItem("user");
     if (!user) {
-      navigationTo(`${appPath}login`);
+      navigationTo("/login");
       return LoginPage();
     }
     return ProfilePage();
@@ -39,18 +40,20 @@ export const getPathName = () => {
 };
 
 export const navigationTo = (path) => {
+  const removeSlashPath = path.replace("/", "");
+
   if (window.hashMode) {
-    window.location.hash = path;
+    window.location.hash = `${appPath}${removeSlashPath}`;
     hashRender();
   } else {
-    window.history.pushState(null, "", path);
+    window.history.pushState(null, "", `${appPath}${removeSlashPath}`);
     render();
   }
 };
 
 export const Router = () => {
-  const pathName = window.location.pathname;
-  return (routes[pathName] || routes["*"])();
+  const pathName = getPathName();
+  return (routes[pathName] || routes[`${appPath}*`])();
 };
 
 export const HashRouter = () => {
@@ -59,7 +62,7 @@ export const HashRouter = () => {
   }
 
   const hashPath = window.location.hash.substring(1);
-  return (routes[hashPath] || routes["*"])();
+  return (routes[hashPath] || routes[`${appPath}*`])();
 };
 
 export const InitRouter = () => {
