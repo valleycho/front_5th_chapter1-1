@@ -1,5 +1,5 @@
-import { Header } from "../layout/Header";
-import { Footer } from "../layout/Footer";
+import { Header } from "../layout/Header.js";
+import { Footer } from "../layout/Footer.js";
 
 export const MainPage = () => `
   <div class="bg-gray-100 min-h-screen flex justify-center">
