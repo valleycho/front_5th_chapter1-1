@@ -1,5 +1,5 @@
-import "./utils/eventUtils";
-import { InitRouter } from "./utils/routerUtils";
+import "./utils/eventUtils.js";
+import { InitRouter } from "./utils/routerUtils.js";
 
 window.hashMode = false;
 
