@@ -7,14 +7,14 @@ import { render } from "../main.js";
 import { hashRender } from "../main.hash.js";
 
 const appPath =
-  process.env.NODE_ENV === "production" ? "/front_5th_chapter1-1/" : "/";
+  import.meta.env.MODE === "production" ? "/front_5th_chapter1-1/" : "/";
 
 const routes = {
   [`${appPath}`]: () => MainPage(),
   [`${appPath}login`]: () => {
     const user = localStorage.getItem("user");
     if (user) {
-      navigationTo("/");
+      navigationTo(`${appPath}`);
       return MainPage();
     }
 
@@ -23,7 +23,7 @@ const routes = {
   [`${appPath}profile`]: () => {
     const user = localStorage.getItem("user");
     if (!user) {
-      navigationTo("/login");
+      navigationTo(`${appPath}login`);
       return LoginPage();
     }
     return ProfilePage();
