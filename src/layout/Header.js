@@ -1,4 +1,4 @@
-import { getPathName } from "../utils/routerUtils";
+import { getPathName } from "../utils/routerUtils.js";
 
 export const Header = () => {
   const user = localStorage.getItem("user");
