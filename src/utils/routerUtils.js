@@ -6,9 +6,8 @@ import { ErrorPage } from "../pages/ErrorPage.js";
 import { render } from "../main.js";
 import { hashRender } from "../main.hash.js";
 
-// 방법 1: import.meta.env 사용
 const appPath =
-  import.meta.env.MODE === "production" ? "/front_5th_chapter1-1/" : "/";
+  process.env.NODE_ENV === "production" ? "/front_5th_chapter1-1/" : "/";
 
 const routes = {
   [`${appPath}`]: () => MainPage(),
