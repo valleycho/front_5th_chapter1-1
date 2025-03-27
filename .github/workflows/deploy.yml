@@ -22,7 +22,7 @@ jobs:
           cache: "pnpm" # npm 캐시 사용
 
       - name: Install dependencies
-        run: pnpm ci # 더 안전한 설치
+        run: pnpm install
 
       - name: Run tests
         run: pnpm run test # 테스트 실행
