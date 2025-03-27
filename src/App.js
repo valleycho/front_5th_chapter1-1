@@ -2,7 +2,7 @@ import { MainPage } from "./pages/MainPage.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { ProfilePage } from "./pages/ProfilePage.js";
 import { ErrorPage } from "./pages/ErrorPage.js";
-import { customRouterUtils } from "./utils/routerUtils.js";
+import { customRouterUtils, routerConfig } from "./utils/routerUtils.js";
 import { userUtils } from "./utils/userUtils.js";
 
 const getPage = (path) => {
@@ -45,9 +45,9 @@ const getPage = (path) => {
 };
 
 const render = () => {
-  // if (routerConfig.getRouterType() === "hash" && !window.location.hash) {
-  //   window.location.hash = "#/"; // 여기가 문젠가..
-  // }
+  if (routerConfig.getRouterType() === "hash" && !window.location.hash) {
+    window.location.hash = "#/";
+  }
 
   const path = customRouterUtils.getCurrentPath();
   document.getElementById("root").innerHTML = getPage(path);

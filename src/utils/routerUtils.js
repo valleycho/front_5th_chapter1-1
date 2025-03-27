@@ -1,6 +1,11 @@
 import render from "../App.js";
 
 const isProd = process.env.NODE_ENV === "production";
+console.log({
+  isProd,
+  baseUrl: routerConfig.baseUrl,
+  type: routerConfig.type,
+});
 
 export const routerConfig = {
   type: "history",
