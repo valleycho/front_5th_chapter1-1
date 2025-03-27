@@ -1,9 +1,7 @@
-import { getPathName } from "../utils/routerUtils.js";
-
 export const Header = () => {
   const user = localStorage.getItem("user");
   const isLoggedIn = user && user !== null;
-  const pathName = getPathName();
+  const pathName = "/";
 
   return `
     <header class="bg-blue-600 text-white p-4 sticky top-0">

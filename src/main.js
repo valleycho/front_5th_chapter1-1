@@ -1,13 +1,8 @@
-import "./utils/eventUtils.js";
-import { InitRouter } from "./utils/routerUtils.js";
+import { routerConfig } from "./utils/routerUtils.js";
+import render from "./App.js";
+import eventHandler from "./utils/eventUtils.js";
 
-window.hashMode = false;
+routerConfig.setRouterType("history");
 
-export const render = () => {
-  document.getElementById("root").innerHTML = InitRouter();
-};
-
-// dom 로드 후에 window.hashMode 값 사용하려고 로드 된 후에 렌더링 되게 수정
-document.addEventListener("DOMContentLoaded", () => {
-  render();
-});
+eventHandler.init();
+render();

@@ -1,73 +1,54 @@
-// routerUtils.js
-import { LoginPage } from "../pages/LoginPage.js";
-import { MainPage } from "../pages/MainPage.js";
-import { ProfilePage } from "../pages/ProfilePage.js";
-import { ErrorPage } from "../pages/ErrorPage.js";
-import { render } from "../main.js";
-import { hashRender } from "../main.hash.js";
+import render from "../App.js";
+import { userUtils } from "./userUtils.js";
 
-const appPath = window.location.hostname.includes("github.io")
-  ? "/front_5th_chapter1-1/"
-  : "/";
-
-const routes = {
-  [`${appPath}`]: () => MainPage(),
-  [`${appPath}login`]: () => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      navigationTo("/");
-      return MainPage();
-    }
-
-    return LoginPage();
+export const routerConfig = {
+  type: "history",
+  baseUrl:
+    process.env.NODE_ENV === "production" ? "/front_5th_chapter1-1" : "/",
+  setRouterType: function (routerType) {
+    this.type = routerType;
   },
-  [`${appPath}profile`]: () => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      navigationTo("/login");
-      return LoginPage();
-    }
-    return ProfilePage();
+  getRouterType: function () {
+    return this.type;
   },
-  [`${appPath}*`]: () => ErrorPage(),
 };
 
-export const getPathName = () => {
-  if (window.hashMode) {
-    return window.location.hash.substring(1);
-  }
-  return window.location.pathname;
-};
+export const customRouterUtils = {
+  getCurrentPath: () => {
+    if (routerConfig.getRouterType() === "hash") {
+      return window.location.hash.slice(1);
+    }
 
-export const navigationTo = (path) => {
-  const removeSlashPath = path.replace("/", "");
+    const realPath =
+      process.env.NODE_ENV === "production"
+        ? window.location.pathname.replace(routerConfig.baseUrl, "")
+        : window.location.pathname;
+    return realPath;
+  },
+  navigationTo: (path) => {
+    if (routerConfig.getRouterType() === "hash") {
+      window.location.hash = path;
+    } else {
+      window.history.pushState(null, "", path);
+    }
 
-  if (window.hashMode) {
-    window.location.hash = `${appPath}${removeSlashPath}`;
-    hashRender();
-  } else {
-    window.history.pushState(null, "", `${appPath}${removeSlashPath}`);
     render();
-  }
-};
+  },
+  RouterGuard: ({ path, component, redirectComponent }) => {
+    if (customRouterUtils.getCurrentPath(path) === "/profile") {
+      if (!userUtils.isLoggedIn()) {
+        return redirectComponent;
+      }
 
-export const Router = () => {
-  const pathName = getPathName();
-  return (routes[pathName] || routes[`${appPath}*`])();
-};
+      return component;
+    }
 
-export const HashRouter = () => {
-  if (!window.location.hash) {
-    window.location.hash = "#/";
-  }
+    if (customRouterUtils.getCurrentPath(path) === "/login") {
+      if (userUtils.isLoggedIn()) {
+        return redirectComponent;
+      }
 
-  const hashPath = window.location.hash.substring(1);
-  return (routes[hashPath] || routes[`${appPath}*`])();
-};
-
-export const InitRouter = () => {
-  if (window.hashMode) {
-    return HashRouter();
-  }
-  return Router();
+      return component;
+    }
+  },
 };

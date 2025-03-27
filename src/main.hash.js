@@ -1,12 +1,8 @@
-import { InitRouter } from "./utils/routerUtils.js";
-import "./utils/eventUtils.js";
+import { routerConfig } from "./utils/routerUtils.js";
+import render from "./App.js";
+import eventHandler from "./utils/eventUtils.js";
 
-window.hashMode = true;
+routerConfig.setRouterType("hash");
 
-export const hashRender = () => {
-  document.getElementById("root").innerHTML = InitRouter();
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-  hashRender();
-});
+eventHandler.init();
+render();

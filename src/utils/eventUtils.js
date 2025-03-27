@@ -1,61 +1,61 @@
-import { navigationTo } from "./routerUtils.js";
-import { render } from "../main.js";
-import { hashRender } from "../main.hash.js";
+import { userUtils } from "./userUtils.js";
+import { customRouterUtils } from "./routerUtils.js";
+import render from "../App.js";
 
-// 링크 클릭시 페이지 이동
-document.addEventListener("click", async (e) => {
-  if (e.target.tagName === "A") {
-    e.preventDefault();
+const eventHandler = (() => {
+  const handleLinkClick = async (e) => {
+    if (e.target.tagName === "A") {
+      e.preventDefault();
 
-    if (e.target.textContent === "로그아웃") {
-      await localStorage.removeItem("user");
-      navigationTo("/login");
-      return;
+      if (e.target.textContent === "로그아웃") {
+        await userUtils.logout();
+        customRouterUtils.navigationTo("/login");
+        return;
+      }
+
+      const href = e.target.getAttribute("href");
+      customRouterUtils.navigationTo(href);
+    }
+  };
+
+  const handleFormSubmit = (e) => {
+    if (e.target.id === "login-form") {
+      // 로그인
+      e.preventDefault();
+      userUtils.setUser({
+        username: "testuser",
+        email: "",
+        bio: "",
+      });
+
+      customRouterUtils.navigationTo("/profile");
     }
 
-    const href = e.target.getAttribute("href");
-    navigationTo(href);
-  }
-});
+    if (e.target.id === "profile-form") {
+      const username = document.getElementById("username")?.value || "";
+      const email = document.getElementById("email")?.value || "";
+      const bio = document.getElementById("bio")?.value || "";
 
-// form 제출시 동작 이벤트
-document.addEventListener("submit", (e) => {
-  if (e.target.id === "login-form") {
-    // 로그인
-    e.preventDefault();
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ username: "testuser", email: "", bio: "" }),
-    );
+      userUtils.setUser({
+        username,
+        email,
+        bio,
+      });
 
-    navigationTo("/profile");
-    render();
-  }
+      alert("프로필이 업데이트되었습니다.");
+    }
+  };
 
-  if (e.target.id === "profile-form") {
-    const username = document.getElementById("username")?.value || "";
-    const email = document.getElementById("email")?.value || "";
-    const bio = document.getElementById("bio")?.value || "";
+  const init = () => {
+    document.addEventListener("click", handleLinkClick);
+    document.addEventListener("submit", handleFormSubmit);
+    window.addEventListener("popstate", render);
+    window.addEventListener("hashchange", render);
+  };
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        username: username,
-        email: email,
-        bio: bio,
-      }),
-    );
+  return {
+    init,
+  };
+})();
 
-    alert("프로필이 업데이트되었습니다.");
-  }
-});
-
-// 브라우저 뒤로가기시 이전 상태 복원
-window.addEventListener("popstate", () => {
-  render();
-});
-
-// 해시라우터 변경시 렌더링
-window.addEventListener("hashchange", () => {
-  hashRender();
-});
+export default eventHandler;
