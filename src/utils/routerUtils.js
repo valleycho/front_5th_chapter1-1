@@ -28,8 +28,7 @@ export const customRouterUtils = {
     if (routerConfig.getRouterType() === "hash") {
       window.location.hash = path;
     } else {
-      const fullPath = isProd ? `${routerConfig.baseUrl}${path}` : path;
-      window.history.pushState({}, "", fullPath);
+      window.history.pushState({}, "", path);
     }
 
     render();
