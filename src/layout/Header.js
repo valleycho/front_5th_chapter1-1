@@ -1,7 +1,9 @@
+import { customRouterUtils } from "../utils/routerUtils.js";
+
 export const Header = () => {
   const user = localStorage.getItem("user");
   const isLoggedIn = user && user !== null;
-  const pathName = "/";
+  const pathName = customRouterUtils.getCurrentPath();
 
   return `
     <header class="bg-blue-600 text-white p-4 sticky top-0">

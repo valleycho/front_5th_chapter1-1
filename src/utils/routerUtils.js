@@ -1,5 +1,4 @@
 import render from "../App.js";
-import { userUtils } from "./userUtils.js";
 
 const isProd = () => {
   return window.location.hostname.includes("github.io");
@@ -36,21 +35,23 @@ export const customRouterUtils = {
 
     render();
   },
-  RouterGuard: ({ path, component, redirectComponent }) => {
-    if (customRouterUtils.getCurrentPath(path) === "/profile") {
-      if (!userUtils.isLoggedIn()) {
-        return redirectComponent;
-      }
+  // RouterGuard: ({ path, component, redirectComponent }) => {
+  //   if (customRouterUtils.getCurrentPath(path) === "/login") {
+  //     if (userUtils.isLoggedIn()) {
+  //       customRouterUtils.navigationTo("/");
+  //       return redirectComponent;
+  //     }
 
-      return component;
-    }
+  //     return component;
+  //   }
 
-    if (customRouterUtils.getCurrentPath(path) === "/login") {
-      if (userUtils.isLoggedIn()) {
-        return redirectComponent;
-      }
+  //   if (customRouterUtils.getCurrentPath(path) === "/profile") {
+  //     if (!userUtils.isLoggedIn()) {
+  //       customRouterUtils.navigationTo("/login");
+  //       return redirectComponent;
+  //     }
 
-      return component;
-    }
-  },
+  //     return component;
+  //   }
+  // },
 };
