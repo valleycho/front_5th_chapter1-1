@@ -19,13 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm" # npm 캐시 사용
+          cache: "pnpm" # npm 캐시 사용
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run tests
-        run: npm run test # 테스트 실행
+        run: pnpm run test # 테스트 실행
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
           NODE_ENV: production
 
