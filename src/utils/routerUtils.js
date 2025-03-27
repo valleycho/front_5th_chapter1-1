@@ -1,9 +1,10 @@
 import render from "../App.js";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const routerConfig = {
   type: "history",
-  baseUrl:
-    process.env.NODE_ENV === "production" ? "/front_5th_chapter1-1" : "/",
+  baseUrl: isProd ? "/front_5th_chapter1-1" : "/",
   setRouterType: function (routerType) {
     this.type = routerType;
   },
@@ -18,10 +19,9 @@ export const customRouterUtils = {
       return window.location.hash.slice(1);
     }
 
-    const realPath =
-      process.env.NODE_ENV === "production"
-        ? window.location.pathname.replace(routerConfig.baseUrl, "")
-        : window.location.pathname;
+    const realPath = isProd
+      ? window.location.pathname.replace(routerConfig.baseUrl, "")
+      : window.location.pathname;
     return realPath;
   },
   navigationTo: (path) => {
