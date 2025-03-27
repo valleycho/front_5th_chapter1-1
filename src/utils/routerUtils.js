@@ -1,7 +1,6 @@
 import render from "../App.js";
 
-const isProd = process.env.NODE_ENV === "production";
-console.log({ isProd });
+const isProd = location.hostname.includes("github.io");
 
 export const routerConfig = {
   type: "history",
