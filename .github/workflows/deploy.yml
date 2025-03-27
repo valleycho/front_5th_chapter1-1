@@ -1,16 +1,15 @@
-# .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main # main 브랜치에 push될 때 실행
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # GitHub Pages 배포를 위한 권한
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,16 +17,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: "pnpm" # npm 캐시 사용
+          node-version: "20" # 22 대신 20 사용 (더 안정적)
+          cache: "pnpm"
 
-      - name: Install & Build
-        run: pnpm install && pnpm run build
+      - name: Install pnpm # pnpm 설치 단계 추가
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          force_orphan: true # gh-pages 브랜치를 깨끗하게 유지
+          force_orphan: true
           commit_message: "Deploy: ${{ github.event.head_commit.message }}"
