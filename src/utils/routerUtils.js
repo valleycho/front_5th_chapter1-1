@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 export const routerConfig = {
   type: "history",
-  baseUrl: isProd ? "/front_5th_chapter1-1" : "/",
+  baseUrl: isProd ? "/front_5th_chapter1-1" : "",
   setRouterType: function (routerType) {
     this.type = routerType;
   },
