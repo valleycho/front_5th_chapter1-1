@@ -26,12 +26,9 @@ export const customRouterUtils = {
   },
   navigationTo: (path) => {
     if (routerConfig.getRouterType() === "hash") {
-      const fullPath = isProd
-        ? `${routerConfig.baseUrl}/index.hash.html${path}`
-        : path;
-      window.location.hash = fullPath;
+      window.location.hash = path;
     } else {
-      const fullPath = isProd ? `${routerConfig.baseUrl}${path}` : path;
+      const fullPath = routerConfig.baseUrl + path;
       window.history.pushState({}, "", fullPath);
     }
 
