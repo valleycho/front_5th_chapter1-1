@@ -17,10 +17,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # 22 대신 20 사용 (더 안정적)
+          node-version: "20"
           cache: "pnpm"
 
-      - name: Install pnpm # pnpm 설치 단계 추가
+      - name: Install pnpm globally # npm으로 pnpm 전역 설치
+        run: npm install -g pnpm
+
+      - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
