@@ -2,7 +2,7 @@ import render from "../App.js";
 import { userUtils } from "./userUtils.js";
 
 const isProd = () => {
-  return import.meta.env.PROD || window.location.hostname.includes("github.io");
+  return window.location.hostname.includes("github.io");
 };
 
 export const routerConfig = {
